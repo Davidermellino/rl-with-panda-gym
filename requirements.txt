@@ -1,0 +1,9 @@
+# local package
+-e .
+
+# external requirements
+tensorflow
+
+
+# backwards compatibility
+pathlib2
