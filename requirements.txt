@@ -5,5 +5,4 @@
 tensorflow
 
 
-# backwards compatibility
-pathlib2
+

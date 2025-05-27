@@ -1,0 +1,11 @@
+[project]
+name = "rl-with-panda-gym"
+version = "0.0.1"
+description = "Testing multiple RL algorithms on panda gym tasks"
+authors = [
+  { name="Davide Ermellino", email="ermellinodavide@gmail.com" }
+]
+
+dependencies = [
+  "tensorflow",
+]
