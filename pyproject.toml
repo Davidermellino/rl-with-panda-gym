@@ -15,5 +15,6 @@ dependencies = [
   "matplotlib",
   "tensorflow_probability",
   "seaborn",
+  "tf_keras",
   "h5py"
 ]

@@ -80,7 +80,7 @@ if __name__ == "__main__":
     
     
     #CARICO MODELLO
-    model_path = "models/panda_push_models/dqn_target_network_panda_gym_push.h5"
+    model_path = "models/panda_reach_models/actor_ddpg_her_sparse.keras"
     save_path = "results/test/panda_push_results/dqn_results"
    
     
@@ -88,13 +88,13 @@ if __name__ == "__main__":
     model = load_model(model_path, model_type="full")
 
     #CREO AMBIENTE
-    env = gym.make("PandaPush-v3", reward_type="sparse")
+    env = gym.make("PandaReach-v3", render_mode="human",reward_type="sparse")
 
     #CREO AGENTE
-    agent = DQN(env=env, epsilon=0)
+    agent = DDPG(env=env, noise_std=0)
 
     #TESTO IL MODELLO
-    reward_track, success_track = test_model(model=model, name="DQN", agent=agent, env=env, save=True, save_path=save_path, render=False)
+    reward_track, success_track = test_model(model=model, name="DDPG", agent=agent, env=env, save=False, save_path=save_path, render=True)
     
     print(f"Reward medio: {np.mean(reward_track)}")
     print(f"Success rate: {np.mean(success_track)}")
