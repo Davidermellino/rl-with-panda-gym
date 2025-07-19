@@ -87,3 +87,8 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+.venv/
+uv.lock
+
+rl-with-panda-gym

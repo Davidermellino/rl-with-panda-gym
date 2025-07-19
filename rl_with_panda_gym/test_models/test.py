@@ -80,7 +80,7 @@ if __name__ == "__main__":
     
     
     #CARICO MODELLO
-    model_path = "models/panda_reach_models/actor_ddpg_her_sparse.keras"
+    model_path = "models/panda_push_models/actor_ddpg_her_push_sparse.keras"
     save_path = "results/test/panda_push_results/dqn_results"
    
     
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     model = load_model(model_path, model_type="full")
 
     #CREO AMBIENTE
-    env = gym.make("PandaReach-v3", render_mode="human",reward_type="sparse")
+    env = gym.make("PandaPush-v3", render_mode="human",reward_type="sparse")
 
     #CREO AGENTE
     agent = DDPG(env=env, noise_std=0)

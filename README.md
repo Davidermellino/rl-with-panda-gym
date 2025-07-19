@@ -1,57 +1,97 @@
-rl-with-panda-gym
-==============================
+# 🤖 Reinforcement Learning with PandaGym
 
-Testing multiple RL algorithms on panda-gym tasks
+This project explores the application of Deep Reinforcement Learning (DRL) algorithms to robotic control tasks using the [PandaGym](https://github.com/Farama-Foundation/Panda-Gym) simulation environment, which models the Franka Emika Panda robotic arm.
 
-Project Organization
-------------
+The goal is to train agents to solve robotic manipulation tasks using various RL algorithms. The focus is on two specific environments:
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+- **PandaReach**: the end-effector must reach a randomly generated point in 3D space.
+- **PandaPush**: the robot must push a cube to a randomly chosen goal position.
+
+We experimented with several RL techniques:
+
+- **Value-based**: DQN (single and target network variants)
+- **Policy-based**: REINFORCE (continuous and discrete)
+- **Actor-Critic**: DDPG, DDPG + HER (Hindsight Experience Replay)
+
+The best performance was achieved using **DDPG + HER**, which demonstrated strong results on both tasks
+
+---
+
+## 🎯 Results
+
+Below are the results of trained agents on both environments.
+
+### 🐼 PandaReach
+
+The robot arm learns to reach the target in just a few hundred episodes using DQN target network and DDPG.
+
+![PandaReach](video_test/gifs/DDPG_HER_REACH.gif)
+
+### 📦 PandaPush
+
+The agent successfully learns to push the cube to the goal using DDPG combined with HER.
+
+![PandaPush](https://github.com/Davidermellino/rl-with-panda-gym/blob/main/video_test/gifs/DDPG_HER%20_PUSH.gif)
+
+---
+
+## ⚙️ Installation
+
+Install the module using pip:
+
+```bash
+pip install rl-with-panda-gym
+```
+
+---
+
+## 🚀 Example Usage
+
+To train DDPG + HER on PandaReach ( takes few minutes to converge )
+
+```python
 
 
---------
+# Create Environment
+env = gym.make("PandaReach-v3", reward_type="sparse")
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+# Initialize DDPG Agent
+agent = DDPG(
+    env=env,
+    num_episodes=2000,
+    print_every=20,
+    store_data=True,
+    train_with_her=True,
+    result_path=result_path_DDPG,
+    model_path=model_path_DDPG,
+    plot_path=plot_path_DDPG,
+)
+
+agent.train()
+
+```
+---
+
+## ✅ Solved Tasks
+
+- [x] PandaReach
+- [x] PandaPush
+- [ ] PandaSlide
+- [ ] PandaPickAndPlace
+- [ ] PandaStack
+- [ ] PandaFlip
+
+---
+
+## 🔭 Future Work
+
+- Apply DDPG + HER to more complex environments like PandaPickAndPlace
+- Implement and benchmark advanced actor-critic methods such as PPO, A2C, and SAC
+- Investigate sim-to-real transfer of trained policies to physical robots
+
+---
+
+## 👨‍💻 Author
+
+Developed by Davide Ermellino - Università degli Studi di Cagliari 
+For any questions or collaborations: ermellinodavide@gmail.com
