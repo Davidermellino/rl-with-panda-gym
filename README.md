@@ -50,6 +50,7 @@ pip install rl-with-panda-gym
 To train DDPG + HER on PandaReach ( takes few minutes to converge )
 
 ```python
+import gymnasium as gym
 from rl_with_panda_gym.models.DDPG import DDPG
 
 
